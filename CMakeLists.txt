@@ -66,10 +66,11 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 add_executable(SDL2FrameworkTest
     ${SRC_DIR}/core/main.cpp
     ${SRC_DIR}/core/context.cpp
-    ${SRC_DIR}/App.cpp
+    ${SRC_DIR}/app.cpp
 
     ${INCLUDE_DIR}/core/context.h
-    ${INCLUDE_DIR}/App.h
+    ${INCLUDE_DIR}/config.h
+    ${INCLUDE_DIR}/app.h
 )
 target_link_libraries(SDL2FrameworkTest
     SDL2::SDL2-static

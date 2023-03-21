@@ -1,11 +1,20 @@
 #include <iostream>
 
+#include <SDL.h>
+
 #include "core/context.h"
 
-#include "App.h"
+#include "config.h"
+#include "app.h"
 
 int main(int argc, char **argv) {
-    Core::CreateContext();
+    Core::Context context(       //
+        "Framework",             // Title name
+        SDL_WINDOWPOS_UNDEFINED, // Position X
+        SDL_WINDOWPOS_UNDEFINED, // Position Y
+        SCREEN_WIDTH,            // Width
+        SCREEN_HEIGHT            // Height
+    );
 
     App app;
 
@@ -23,7 +32,7 @@ int main(int argc, char **argv) {
             app.OnExit();
             break;
         }
-    }
 
-    Core::DestroyContext();
+        SDL_GL_SwapWindow(context.GetWindow());
+    }
 }
