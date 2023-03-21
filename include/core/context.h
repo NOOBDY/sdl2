@@ -1,6 +1,10 @@
 #ifndef CORE_WINDOW_H
 #define CORE_WINDOW_H
 
+#ifndef GUARD
+#error Do not include this file directly unless you know what you are doing
+#endif
+
 #include <string>
 
 #include <SDL.h>

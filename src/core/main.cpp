@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 
+#define GUARD
 #include "core/context.h"
 
 #include "config.h"
