@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include <GL/glew.h>
+#include <glad/gl.h>
 
 #include <SDL.h>
 #include <SDL_opengl.h>
@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
     SDL_GLContext context = SDL_GL_CreateContext(window);
 
-    const GLenum status = glewInit();
+    gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress);
 
     GLuint programID = glCreateProgram();
 
@@ -109,6 +109,9 @@ int main(int argc, char **argv) {
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
+                quit = true;
+            }
+            if (e.key.keysym.sym == SDLK_ESCAPE) {
                 quit = true;
             }
         }

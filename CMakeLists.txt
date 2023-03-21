@@ -38,15 +38,19 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-    glew
+    glad
 
-    URL             https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.zip
-    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/glew
+    GIT_REPOSITORY  https://github.com/Dav1dde/glad.git
+    GIT_TAG         v2.0.4
+    GIT_SHALLOW     TRUE
+    GIT_PROGRESS    TRUE
+    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/glad
 )
-FetchContent_GetProperties(glew)
-if (NOT ${glew_POPULATED})
-    FetchContent_Populate(glew)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/lib/glew/build/cmake)
+FetchContent_GetProperties(glad)
+if(NOT glad_POPULATED)
+    FetchContent_Populate(glad)
+    add_subdirectory(${glad_SOURCE_DIR}/cmake)
+    glad_add_library(glad_gl_core_41 STATIC API gl:core=4.1)
 endif()
 
 set(SDL2IMAGE_INSTALL OFF)
@@ -88,11 +92,12 @@ add_executable(SDL2OpenGLTest
 )
 target_include_directories(SDL2OpenGLTest PRIVATE
     lib/glew/include/
+    ${glad_BINARY_DIR}/../../gladsources/glad_gl_core_41/include/
 )
 target_link_libraries(SDL2OpenGLTest
     SDL2::SDL2-static
     SDL2::SDL2main
 
     ${OPENGL_LIBRARY}
-    glew_s
+    glad_gl_core_41
 )
