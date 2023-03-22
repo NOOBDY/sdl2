@@ -30,13 +30,8 @@ cmake --build .
 Note that this step needs to download files from GitHub and compile them from
 source so this process can take quite awhile.
 
-## Executing
+## Sample Framework
 
-There are 4 executables:
+A simple framework with basic logic flow
 
-* `SDL2Test`: A simple SDL test to create a blank window.
-* `SDL2ImageTest`: Read an image from a hard-coded path.
-* `SDL2TTFTest`: Render TTF fonts from a hard-coded path.
-* `SDL2OpenGLTest`: Render a triangle with basic OpenGL 4.1 code.
-
-For the hard-coded relative paths to work, the program has to be run in `build/`
+The binary can be found in `build/SDL2FrameworkTest` after building with CMake.
