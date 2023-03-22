@@ -28,9 +28,6 @@ private:
     GLuint m_VertexBufferID;
     GLuint m_ColorBufferID;
     GLuint m_IndexBufferID;
-
-    GLint m_VertexDataLocation;
-    GLint m_ColorDataLocation;
 };
 
 #endif

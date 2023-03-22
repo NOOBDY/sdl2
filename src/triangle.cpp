@@ -23,8 +23,8 @@ void Triangle::CreateProgram() {
 
     const GLchar *vertexShaderSource[] = {
         "#version 330 core\n"                                              //
-        "in vec2 LVertexPos2D;\n"                                          //
-        "in vec3 color;\n"                                                 //
+        "layout(location = 0) in vec2 LVertexPos2D;\n"                     //
+        "layout(location = 1) in vec3 color;\n"                            //
         "out vec3 vertexColor;\n"                                          //
         "void main() {\n"                                                  //
         "    gl_Position = vec4(LVertexPos2D.x, LVertexPos2D.y, 0, 1 );\n" //
@@ -84,9 +84,6 @@ void Triangle::CreateProgram() {
         glGetProgramInfoLog(m_ProgramID, infoLogLength, 0, &errMessage[0]);
     }
 
-    m_VertexDataLocation = glGetAttribLocation(m_ProgramID, "LVertexPos2D");
-    m_ColorDataLocation = glGetAttribLocation(m_ProgramID, "color");
-
     glClearColor(0.f, 0.f, 0.f, 1.f);
 }
 
@@ -137,13 +134,13 @@ void Triangle::OnUpdate() {
         glGetProgramInfoLog(m_ProgramID, infoLogLength, 0, &errMessage[0]);
     }
 
-    glEnableVertexAttribArray(m_VertexDataLocation);
+    glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferID);
-    glVertexAttribPointer(m_VertexDataLocation, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glEnableVertexAttribArray(m_ColorDataLocation);
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, m_ColorBufferID);
-    glVertexAttribPointer(m_ColorDataLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
