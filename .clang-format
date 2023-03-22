@@ -2,3 +2,4 @@ IndentWidth: 4
 AccessModifierOffset: -4
 SortIncludes: false
 AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakTemplateDeclarations: Yes

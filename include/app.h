@@ -1,6 +1,8 @@
 #ifndef APP_H
 #define APP_H
 
+#include "triangle.h"
+
 class App {
 public:
     enum State {
@@ -21,6 +23,8 @@ public:
 private:
     State m_CurrentState;
     bool m_Exit;
+
+    Triangle m_Triangle;
 };
 
 #endif

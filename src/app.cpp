@@ -17,13 +17,13 @@ void App::OnStart() {
 void App::OnUpdate() {
     SDL_Event event;
 
-    glClearColor(0.1f, 0.1f, 1.0f, 1.0f);
-
     while (SDL_PollEvent(&event) != 0) {
         if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
             m_CurrentState = App::EXIT;
         }
     }
+
+    m_Triangle.OnUpdate();
 }
 
 void App::OnExit() {
