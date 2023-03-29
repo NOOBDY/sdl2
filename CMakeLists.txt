@@ -55,9 +55,13 @@ if(NOT glad_POPULATED)
     glad_add_library(glad_gl_core_41 STATIC API gl:core=4.1)
 endif()
 
-set(SDL2IMAGE_INSTALL OFF)
-set(SDL2TTF_INSTALL OFF)
 set(BUILD_SHARED_LIBS FALSE)
+
+set(SDL2IMAGE_INSTALL OFF)
+set(SDL2IMAGE_VENDORED ON)
+
+set(SDL2TTF_INSTALL OFF)
+set(SDL2TTF_VENDORED ON)
 FetchContent_MakeAvailable(sdl2 sdl2_image sdl2_ttf)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
