@@ -14,7 +14,7 @@ FetchContent_Declare(
     GIT_TAG         release-2.26.4
     GIT_SHALLOW     TRUE
     GIT_PROGRESS    TRUE
-    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/sdl2
+    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/vendor/sdl2
 )
 
 FetchContent_Declare(
@@ -24,7 +24,7 @@ FetchContent_Declare(
     GIT_TAG         release-2.6.3
     GIT_SHALLOW     TRUE
     GIT_PROGRESS    TRUE
-    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/sdl2_image
+    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/vendor/sdl2_image
 )
 
 FetchContent_Declare(
@@ -34,7 +34,7 @@ FetchContent_Declare(
     GIT_TAG         release-2.20.2
     GIT_SHALLOW     TRUE
     GIT_PROGRESS    TRUE
-    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/sdl2_ttf
+    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/vendor/sdl2_ttf
 )
 
 FetchContent_Declare(
@@ -44,7 +44,7 @@ FetchContent_Declare(
     GIT_TAG         v2.0.4
     GIT_SHALLOW     TRUE
     GIT_PROGRESS    TRUE
-    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/lib/glad
+    SOURCE_DIR      ${CMAKE_SOURCE_DIR}/vendor/glad
 )
 FetchContent_GetProperties(glad)
 if(NOT glad_POPULATED)

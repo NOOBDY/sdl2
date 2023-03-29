@@ -374,4 +374,4 @@ compile_commands.json
 
 !assets/*
 
-lib/
+vendor/
