@@ -5,6 +5,8 @@
 #define GUARD
 #include "core/context.h"
 
+#include "util/time.h"
+
 #include "config.h"
 #include "app.h"
 
@@ -27,6 +29,7 @@ int main(int argc, char **argv) {
 
         case App::UPDATE:
             app.OnUpdate();
+            std::cout << Time::GetDeltaTime() << "\n";
             break;
 
         case App::EXIT:
@@ -34,6 +37,7 @@ int main(int argc, char **argv) {
             break;
         }
 
+        Time::Update();
         SDL_GL_SwapWindow(context.GetWindow());
     }
 }

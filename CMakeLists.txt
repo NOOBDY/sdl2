@@ -66,10 +66,12 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 add_executable(SDL2FrameworkTest
     ${SRC_DIR}/core/main.cpp
     ${SRC_DIR}/core/context.cpp
+    ${SRC_DIR}/util/time.cpp
     ${SRC_DIR}/triangle.cpp
     ${SRC_DIR}/app.cpp
 
     ${INCLUDE_DIR}/core/context.h
+    ${INCLUDE_DIR}/util/time.h
     ${INCLUDE_DIR}/util/game_object.h
     ${INCLUDE_DIR}/util/vector.h
     ${INCLUDE_DIR}/triangle.h
