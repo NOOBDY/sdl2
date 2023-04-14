@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <glad/gl.h>
+#include <GL/glew.h>
 
 #include "util/game_object.h"
 

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include <glad/gl.h>
+#include <GL/glew.h>
 
 #include <SDL_opengl.h>
 
@@ -30,7 +30,8 @@ Context::Context(std::string title, int posX, int posY, int width, int height) {
 
     m_Context = SDL_GL_CreateContext(m_Window); // Currently unused
 
-    if (!gladLoadGL(reinterpret_cast<GLADloadfunc>(SDL_GL_GetProcAddress))) {
+    glewExperimental = GL_TRUE;
+    if (glewInit() != GLEW_OK) {
         GLuint err = glGetError();
         std::cout << "Failed to initialize OpenGL\n";
         std::cout << glGetString(err);

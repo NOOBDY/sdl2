@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <glad/gl.h>
+#include <GL/glew.h>
 
 #include <SDL.h>
 
