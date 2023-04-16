@@ -12,7 +12,7 @@ public:
     Triangle();
     ~Triangle() override;
 
-    void OnUpdate() override;
+    void Update() override;
 
 private:
     void CreateProgram();

@@ -22,22 +22,23 @@ int main(int argc, char **argv) {
     App app;
 
     while (!app.GetExit()) {
+        glClear(GL_COLOR_BUFFER_BIT);
+
         switch (app.GetCurrentState()) {
         case App::START:
-            app.OnStart();
+            app.Start();
             break;
 
         case App::UPDATE:
-            app.OnUpdate();
-            std::cout << Time::GetDeltaTime() << "\n";
+            app.Update();
             break;
 
         case App::EXIT:
-            app.OnExit();
+            app.Exit();
             break;
         }
 
-        Time::Update();
+        Util::Time::Update();
         SDL_GL_SwapWindow(context.GetWindow());
     }
 }
