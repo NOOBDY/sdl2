@@ -71,12 +71,14 @@ add_executable(SDL2FrameworkTest
     ${SRC_DIR}/core/main.cpp
     ${SRC_DIR}/core/context.cpp
     ${SRC_DIR}/util/time.cpp
+    ${SRC_DIR}/util/loader.cpp
     ${SRC_DIR}/app.cpp
     ${SRC_DIR}/triangle.cpp
     ${SRC_DIR}/fps_counter.cpp
 
     ${INCLUDE_DIR}/core/context.h
     ${INCLUDE_DIR}/util/time.h
+    ${INCLUDE_DIR}/util/loader.h
     ${INCLUDE_DIR}/util/game_object.h
     ${INCLUDE_DIR}/util/vector.h
     ${INCLUDE_DIR}/config.h

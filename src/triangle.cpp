@@ -1,6 +1,8 @@
 #include "triangle.h"
 
-#include "util/vector.h"
+#include <string>
+
+#include "util/loader.h"
 
 Triangle::Triangle() {
     CreateProgram();
@@ -21,18 +23,11 @@ void Triangle::CreateProgram() {
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-    const GLchar *vertexShaderSource[] = {
-        "#version 330 core\n"                                              //
-        "layout(location = 0) in vec2 LVertexPos2D;\n"                     //
-        "layout(location = 1) in vec3 color;\n"                            //
-        "out vec3 vertexColor;\n"                                          //
-        "void main() {\n"                                                  //
-        "    gl_Position = vec4(LVertexPos2D.x, LVertexPos2D.y, 0, 1 );\n" //
-        "    vertexColor = color;\n"                                       //
-        "}\n"                                                              //
-    };
+    std::string vertexShaderSource =
+        Util::LoadTextFile("../assets/shaders/triangle.vert");
+    const GLchar *vertSrcPtr = vertexShaderSource.c_str();
 
-    glShaderSource(vertexShader, 1, vertexShaderSource, 0);
+    glShaderSource(vertexShader, 1, &vertSrcPtr, 0);
     glCompileShader(vertexShader);
 
     GLint status = GL_FALSE;
@@ -50,16 +45,11 @@ void Triangle::CreateProgram() {
 
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    const GLchar *fragmentShaderSource[] = {
-        "#version 330 core\n"                       //
-        "in vec3 vertexColor;\n"                    //
-        "out vec4 LFragment;\n"                     //
-        "void main() {\n"                           //
-        "    LFragment = vec4(vertexColor, 1.0);\n" //
-        "}\n"                                       //
-    };
+    std::string fragmentShaderSource =
+        Util::LoadTextFile("../assets/shaders/triangle.frag");
+    const GLchar *fragSrcPtr = fragmentShaderSource.c_str();
 
-    glShaderSource(fragmentShader, 1, fragmentShaderSource, 0);
+    glShaderSource(fragmentShader, 1, &fragSrcPtr, 0);
     glCompileShader(fragmentShader);
 
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);

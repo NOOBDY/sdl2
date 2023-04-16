@@ -19,6 +19,9 @@ void App::Update() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event) != 0) {
+        if (event.type == SDL_QUIT)
+            std::cout << "Quit Event\n";
+
         if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
             m_CurrentState = App::EXIT;
         }
