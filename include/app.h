@@ -2,6 +2,7 @@
 #define APP_H
 
 #include "triangle.h"
+#include "fps_counter.h"
 
 class App {
 public:
@@ -25,6 +26,7 @@ private:
     bool m_Exit;
 
     Triangle m_Triangle;
+    FpsCounter m_FpsCounter;
 };
 
 #endif

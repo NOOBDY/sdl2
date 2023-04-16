@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 
 #include <SDL_opengl.h>
+#include <SDL_ttf.h>
 
 namespace Core {
 Context::Context(std::string title, int posX, int posY, int width, int height) {
@@ -17,6 +18,11 @@ Context::Context(std::string title, int posX, int posY, int width, int height) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "Failed to initialize SDL\n";
         std::cout << SDL_GetError() << "\n";
+    }
+
+    if (TTF_Init() < 0) {
+        std::cout << "Failed to initialize SDL_ttf\n";
+        std::cout << TTF_GetError();
     }
 
     m_Window = SDL_CreateWindow(             //
@@ -43,5 +49,6 @@ Context::~Context() {
     SDL_DestroyWindow(m_Window);
 
     SDL_Quit();
+    TTF_Quit();
 }
 } // namespace Core
