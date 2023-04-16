@@ -6,7 +6,7 @@ class GameObject {
 public:
     virtual ~GameObject() = default;
 
-    virtual void OnUpdate() = 0;
+    virtual void Update() = 0;
 
 private:
 };

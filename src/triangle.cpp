@@ -118,9 +118,7 @@ void Triangle::CreateVAO() {
                  m_IndexData.data(), GL_STATIC_DRAW);
 }
 
-void Triangle::OnUpdate() {
-    glClear(GL_COLOR_BUFFER_BIT);
-
+void Triangle::Update() {
     glUseProgram(m_ProgramID);
 
     GLint status;

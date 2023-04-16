@@ -8,13 +8,13 @@
 
 App::App() : m_CurrentState(App::START), m_Exit(false) {}
 
-void App::OnStart() {
+void App::Start() {
     std::cout << "Start\n";
 
     m_CurrentState = App::UPDATE;
 }
 
-void App::OnUpdate() {
+void App::Update() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event) != 0) {
@@ -23,10 +23,10 @@ void App::OnUpdate() {
         }
     }
 
-    m_Triangle.OnUpdate();
+    m_Triangle.Update();
 }
 
-void App::OnExit() {
+void App::Exit() {
     std::cout << "Exit\n";
 
     m_Exit = true;

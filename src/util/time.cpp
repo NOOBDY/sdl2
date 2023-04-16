@@ -2,9 +2,9 @@
 
 #include <SDL.h>
 
-Time Time(); // static lifetime object
+Util::Time Time(); // static lifetime object
 
-void Time::Update() {
+void Util::Time::Update() {
     s_Last = s_Now;
     s_Now = SDL_GetPerformanceCounter();
 
@@ -12,6 +12,6 @@ void Time::Update() {
         (s_Now - s_Last) / static_cast<double>(SDL_GetPerformanceFrequency());
 }
 
-double Time::s_Now = SDL_GetPerformanceCounter();
-double Time::s_Last = 0;
-double Time::s_DeltaTime = 0;
+double Util::Time::s_Now = SDL_GetPerformanceCounter();
+double Util::Time::s_Last = 0;
+double Util::Time::s_DeltaTime = 0;

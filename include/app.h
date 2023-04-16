@@ -13,9 +13,9 @@ public:
 
     App();
 
-    void OnStart();
-    void OnUpdate();
-    void OnExit();
+    void Start();
+    void Update();
+    void Exit();
 
     State GetCurrentState() { return m_CurrentState; }
     bool GetExit() { return m_Exit; }

@@ -1,6 +1,7 @@
 #ifndef UTIL_VECTOR_H
 #define UTIL_VECTOR_H
 
+namespace Util {
 template <typename T>
 struct Vector2 {
     union {
@@ -17,5 +18,6 @@ struct Vector3 {
         T z, b;
     };
 };
+} // namespace Util
 
 #endif

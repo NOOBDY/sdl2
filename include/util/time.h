@@ -1,6 +1,7 @@
 #ifndef UTIL_TIME_H
 #define UTIL_TIME_H
 
+namespace Util {
 /**
  * A singleton object that lives through the entire life cycle of the program
  *
@@ -23,5 +24,6 @@ private:
 
     static double s_DeltaTime;
 };
+} // namespace Util
 
 #endif
