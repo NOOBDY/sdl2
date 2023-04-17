@@ -42,6 +42,9 @@ Context::Context(std::string title, int posX, int posY, int width, int height) {
         std::cout << "Failed to initialize OpenGL\n";
         std::cout << glGetString(err);
     }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 Context::~Context() {

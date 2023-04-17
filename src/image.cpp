@@ -38,6 +38,7 @@ void Image::Update() {
         std::cout << IMG_GetError() << "\n";
         return;
     }
+    SDL_SaveBMP(surface, "image.bmp");
 
     unsigned int mode = surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
 

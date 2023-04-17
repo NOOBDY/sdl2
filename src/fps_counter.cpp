@@ -8,9 +8,9 @@
 #include "util/loader.h"
 
 FpsCounter::FpsCounter() {
-    std::string filepath = "../assets/fonts/lazy.ttf";
+    std::string filepath = "../assets/fonts/NotoSansCJK-Regular.ttc";
 
-    m_Font = TTF_OpenFont(filepath.c_str(), 12);
+    m_Font = TTF_OpenFont(filepath.c_str(), 500);
 
     if (!m_Font) {
         std::cout << fmt::format("Failed to load font: '{}'\n", filepath);
@@ -34,23 +34,21 @@ FpsCounter::~FpsCounter() {
 }
 
 void FpsCounter::Update() {
-    std::string fpsText =
-        fmt::format("{}", 1.0f / Util::Time::GetDeltaTime()).c_str();
+    /**
+     * Uncomment this to view dynamic FPS counter
+     * This was the original plan but my brain is melting at 3AM
+     */
+    // std::string fpsText =
+    //     fmt::format("{:.02f}", 1.0f / Util::Time::GetDeltaTime()).c_str();
+    std::string fpsText = ">朋友是一个坚韧不拔的纪录片";
+
     SDL_Surface *surface =
-        TTF_RenderText_Solid(m_Font, fpsText.c_str(), {1, 1, 1});
+        TTF_RenderUTF8_Blended(m_Font, fpsText.c_str(), {255, 255, 255});
 
     if (!surface) {
         std::cout << "Failed to render text surface\n";
         std::cout << TTF_GetError() << "\n";
         return;
-    }
-
-    unsigned int mode = surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-    std::cout << fmt::format("{:d}\n", surface->format->BytesPerPixel);
-
-    if (!surface) {
-        std::cout << "Unable to render text surface\n";
-        std::cout << TTF_GetError() << "\n";
     }
 
     glUseProgram(m_ProgramId);
@@ -59,8 +57,9 @@ void FpsCounter::Update() {
     glUniform1i(location, 0);
 
     glBindTexture(GL_TEXTURE_2D, m_TextureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, surface->w, surface->h, 0, mode,
-                 GL_UNSIGNED_BYTE, surface->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,
+                 surface->pitch / surface->format->BytesPerPixel, surface->h, 0,
+                 GL_BGRA, GL_UNSIGNED_BYTE, surface->pixels);
 
     GLint status = GL_FALSE;
     glValidateProgram(m_ProgramId);
@@ -163,10 +162,10 @@ void FpsCounter::CreateProgram() {
 
 void FpsCounter::CreateVao() {
     std::vector<GLfloat> vertexData = {
-        -0.5f, -0.5f, //
-        0.0f,  -0.5f, //
-        -0.5f, 0.0f,  //
-        0.0f,  0.0f,  //
+        0.0f, 0.5f, //
+        1.0f, 0.5f, //
+        0.0f, 1.0f, //
+        1.0f, 1.0f, //
     };
 
     /**
@@ -176,10 +175,10 @@ void FpsCounter::CreateVao() {
      * TODO: Maybe consider using `stb_image` for loading images?
      */
     std::vector<GLfloat> uvData = {
-        1.0f, 1.0f, //
         0.0f, 1.0f, //
-        1.0f, 0.0f, //
+        1.0f, 1.0f, //
         0.0f, 0.0f, //
+        1.0f, 0.0f, //
     };
 
     std::vector<GLint> indexData = {
@@ -209,6 +208,6 @@ void FpsCounter::CreateTexture() {
     glGenTextures(1, &m_TextureId);
     glBindTexture(GL_TEXTURE_2D, m_TextureId);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
