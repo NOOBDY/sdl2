@@ -24,6 +24,8 @@ private:
     GLuint m_VertexBufferId;
     GLuint m_ColorBufferId;
     GLuint m_IndexBufferId;
+
+    unsigned int m_IndexCount;
 };
 
 #endif

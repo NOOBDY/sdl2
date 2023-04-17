@@ -1,5 +1,6 @@
 #include "triangle.h"
 
+#include <iostream>
 #include <string>
 
 #include "util/loader.h"
@@ -29,6 +30,9 @@ void Triangle::Update() {
 
         std::vector<char> errMessage(infoLogLength + 1);
         glGetProgramInfoLog(m_ProgramId, infoLogLength, 0, &errMessage[0]);
+
+        for (const auto &msg : errMessage)
+            std::cout << msg << "\n";
     }
 
     glEnableVertexAttribArray(0);
@@ -40,7 +44,7 @@ void Triangle::Update() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferId);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, 0);
 
     glUseProgram(0);
 }
@@ -66,6 +70,9 @@ void Triangle::CreateProgram() {
 
         std::vector<char> errMessage(infoLogLength + 1);
         glGetShaderInfoLog(vertexShader, infoLogLength, 0, &errMessage[0]);
+
+        for (const auto &msg : errMessage)
+            std::cout << msg << "\n";
     }
 
     glAttachShader(m_ProgramId, vertexShader);
@@ -86,6 +93,9 @@ void Triangle::CreateProgram() {
 
         std::vector<char> errMessage(infoLogLength + 1);
         glGetShaderInfoLog(fragmentShader, infoLogLength, 0, &errMessage[0]);
+
+        for (const auto &msg : errMessage)
+            std::cout << msg << "\n";
     }
 
     glAttachShader(m_ProgramId, fragmentShader);
@@ -99,9 +109,10 @@ void Triangle::CreateProgram() {
 
         std::vector<char> errMessage(infoLogLength + 1);
         glGetProgramInfoLog(m_ProgramId, infoLogLength, 0, &errMessage[0]);
-    }
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        for (const auto &msg : errMessage)
+            std::cout << msg << "\n";
+    }
 }
 
 void Triangle::CreateVao() {
@@ -133,4 +144,6 @@ void Triangle::CreateVao() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexData.size() * sizeof(GLuint),
                  indexData.data(), GL_STATIC_DRAW);
+
+    m_IndexCount = indexData.size();
 }

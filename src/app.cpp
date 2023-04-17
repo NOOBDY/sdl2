@@ -6,8 +6,7 @@
 
 #include <SDL.h>
 
-App::App()
-    : m_CurrentState(App::START), m_Exit(false), m_Triangle(), m_FpsCounter() {}
+App::App() : m_CurrentState(App::START), m_Exit(false) {}
 
 void App::Start() {
     std::cout << "Start\n";
