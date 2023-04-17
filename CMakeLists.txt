@@ -75,6 +75,7 @@ add_executable(SDL2FrameworkTest
     ${SRC_DIR}/app.cpp
     ${SRC_DIR}/triangle.cpp
     ${SRC_DIR}/fps_counter.cpp
+    ${SRC_DIR}/image.cpp
 
     ${INCLUDE_DIR}/core/context.h
     ${INCLUDE_DIR}/util/time.h
@@ -85,10 +86,12 @@ add_executable(SDL2FrameworkTest
     ${INCLUDE_DIR}/app.h
     ${INCLUDE_DIR}/triangle.h
     ${INCLUDE_DIR}/fps_counter.h
+    ${INCLUDE_DIR}/image.h
 )
 target_link_libraries(SDL2FrameworkTest
     SDL2::SDL2-static
     SDL2::SDL2main
+    SDL2_image::SDL2_image-static
     SDL2_ttf::SDL2_ttf-static
 
     ${OPENGL_LIBRARY}

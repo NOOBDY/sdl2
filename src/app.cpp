@@ -27,7 +27,8 @@ void App::Update() {
     }
 
     m_Triangle.Update();
-    m_FpsCounter.Update();
+    // m_FpsCounter.Update();
+    m_Image.Update();
 }
 
 void App::Exit() {

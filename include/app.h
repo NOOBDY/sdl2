@@ -3,6 +3,7 @@
 
 #include "triangle.h"
 #include "fps_counter.h"
+#include "image.h"
 
 class App {
 public:
@@ -27,6 +28,7 @@ private:
 
     Triangle m_Triangle;
     FpsCounter m_FpsCounter;
+    Image m_Image;
 };
 
 #endif

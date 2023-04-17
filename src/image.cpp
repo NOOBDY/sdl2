@@ -1,27 +1,21 @@
-#include "fps_counter.h"
+#include "image.h"
 
 #include <iostream>
 
 #include <fmt/core.h>
 
+#include <SDL_image.h>
+
 #include "util/time.h"
 #include "util/loader.h"
 
-FpsCounter::FpsCounter() {
-    std::string filepath = "../assets/fonts/lazy.ttf";
-
-    m_Font = TTF_OpenFont(filepath.c_str(), 12);
-
-    if (!m_Font) {
-        std::cout << fmt::format("Failed to load font: '{}'\n", filepath);
-    }
-
+Image::Image() {
     CreateProgram();
     CreateVao();
     CreateTexture();
 }
 
-FpsCounter::~FpsCounter() {
+Image::~Image() {
     glDeleteBuffers(1, &m_VertexBufferId);
     glDeleteBuffers(1, &m_UvBufferId);
     glDeleteBuffers(1, &m_IndexBufferId);
@@ -29,28 +23,27 @@ FpsCounter::~FpsCounter() {
     glDeleteProgram(m_ProgramId);
 
     glDeleteTextures(1, &m_TextureId);
-
-    TTF_CloseFont(m_Font);
 }
 
-void FpsCounter::Update() {
+void Image::Update() {
     std::string fpsText =
         fmt::format("{}", 1.0f / Util::Time::GetDeltaTime()).c_str();
-    SDL_Surface *surface =
-        TTF_RenderText_Solid(m_Font, fpsText.c_str(), {1, 1, 1});
+    // SDL_Surface *surface =
+    //     TTF_RenderText_Solid(m_Font, fpsText.c_str(), {1, 1, 1});
+
+    SDL_Surface *surface = IMG_Load("../assets/images/disappointed.jpg");
 
     if (!surface) {
-        std::cout << "Failed to render text surface\n";
-        std::cout << TTF_GetError() << "\n";
+        std::cout << "Failed to load image surface\n";
+        std::cout << IMG_GetError() << "\n";
         return;
     }
 
     unsigned int mode = surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-    std::cout << fmt::format("{:d}\n", surface->format->BytesPerPixel);
 
     if (!surface) {
-        std::cout << "Unable to render text surface\n";
-        std::cout << TTF_GetError() << "\n";
+        std::cout << "Unable to render image surface\n";
+        std::cout << IMG_GetError() << "\n";
     }
 
     glUseProgram(m_ProgramId);
@@ -95,13 +88,13 @@ void FpsCounter::Update() {
     SDL_FreeSurface(surface);
 }
 
-void FpsCounter::CreateProgram() {
+void Image::CreateProgram() {
     m_ProgramId = glCreateProgram();
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
     std::string vertexShaderSource =
-        Util::LoadTextFile("../assets/shaders/fps_counter.vert");
+        Util::LoadTextFile("../assets/shaders/image.vert");
     const GLchar *vertSrcPtr = vertexShaderSource.c_str();
 
     glShaderSource(vertexShader, 1, &vertSrcPtr, 0);
@@ -126,7 +119,7 @@ void FpsCounter::CreateProgram() {
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     std::string fragmentShaderSource =
-        Util::LoadTextFile("../assets/shaders/fps_counter.frag");
+        Util::LoadTextFile("../assets/shaders/image.frag");
     const GLchar *fragSrcPtr = fragmentShaderSource.c_str();
 
     glShaderSource(fragmentShader, 1, &fragSrcPtr, 0);
@@ -161,7 +154,7 @@ void FpsCounter::CreateProgram() {
     }
 }
 
-void FpsCounter::CreateVao() {
+void Image::CreateVao() {
     std::vector<GLfloat> vertexData = {
         -0.5f, -0.5f, //
         0.0f,  -0.5f, //
@@ -205,7 +198,7 @@ void FpsCounter::CreateVao() {
     m_IndexCount = indexData.size();
 }
 
-void FpsCounter::CreateTexture() {
+void Image::CreateTexture() {
     glGenTextures(1, &m_TextureId);
     glBindTexture(GL_TEXTURE_2D, m_TextureId);
 
