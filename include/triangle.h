@@ -16,18 +16,14 @@ public:
 
 private:
     void CreateProgram();
-    void CreateVAO();
+    void CreateVao();
 
 private:
-    GLuint m_ProgramID;
+    GLuint m_ProgramId;
 
-    std::vector<GLfloat> m_VertexData;
-    std::vector<GLfloat> m_ColorData;
-    std::vector<GLint> m_IndexData;
-
-    GLuint m_VertexBufferID;
-    GLuint m_ColorBufferID;
-    GLuint m_IndexBufferID;
+    GLuint m_VertexBufferId;
+    GLuint m_ColorBufferId;
+    GLuint m_IndexBufferId;
 };
 
 #endif

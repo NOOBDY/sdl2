@@ -6,20 +6,47 @@
 
 Triangle::Triangle() {
     CreateProgram();
-
-    CreateVAO();
+    CreateVao();
 }
 
 Triangle::~Triangle() {
-    glDeleteBuffers(1, &m_VertexBufferID);
-    glDeleteBuffers(1, &m_ColorBufferID);
-    glDeleteBuffers(1, &m_IndexBufferID);
+    glDeleteBuffers(1, &m_VertexBufferId);
+    glDeleteBuffers(1, &m_ColorBufferId);
+    glDeleteBuffers(1, &m_IndexBufferId);
 
-    glDeleteProgram(m_ProgramID);
+    glDeleteProgram(m_ProgramId);
+}
+
+void Triangle::Update() {
+    glUseProgram(m_ProgramId);
+
+    GLint status;
+    glValidateProgram(m_ProgramId);
+    glGetProgramiv(m_ProgramId, GL_VALIDATE_STATUS, &status);
+    if (status != GL_TRUE) {
+        int infoLogLength;
+        glGetProgramiv(m_ProgramId, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+        std::vector<char> errMessage(infoLogLength + 1);
+        glGetProgramInfoLog(m_ProgramId, infoLogLength, 0, &errMessage[0]);
+    }
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferId);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, m_ColorBufferId);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferId);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+
+    glUseProgram(0);
 }
 
 void Triangle::CreateProgram() {
-    m_ProgramID = glCreateProgram();
+    m_ProgramId = glCreateProgram();
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -41,7 +68,7 @@ void Triangle::CreateProgram() {
         glGetShaderInfoLog(vertexShader, infoLogLength, 0, &errMessage[0]);
     }
 
-    glAttachShader(m_ProgramID, vertexShader);
+    glAttachShader(m_ProgramId, vertexShader);
 
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -61,77 +88,49 @@ void Triangle::CreateProgram() {
         glGetShaderInfoLog(fragmentShader, infoLogLength, 0, &errMessage[0]);
     }
 
-    glAttachShader(m_ProgramID, fragmentShader);
+    glAttachShader(m_ProgramId, fragmentShader);
 
-    glLinkProgram(m_ProgramID);
+    glLinkProgram(m_ProgramId);
 
-    glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &status);
+    glGetProgramiv(m_ProgramId, GL_LINK_STATUS, &status);
     if (status != GL_TRUE) {
         int infoLogLength;
-        glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &infoLogLength);
+        glGetProgramiv(m_ProgramId, GL_INFO_LOG_LENGTH, &infoLogLength);
 
         std::vector<char> errMessage(infoLogLength + 1);
-        glGetProgramInfoLog(m_ProgramID, infoLogLength, 0, &errMessage[0]);
+        glGetProgramInfoLog(m_ProgramId, infoLogLength, 0, &errMessage[0]);
     }
 
-    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void Triangle::CreateVAO() {
-    m_VertexData = {
+void Triangle::CreateVao() {
+    std::vector<GLfloat> vertexData = {
         -0.5f, -0.5f, //
         0.5f,  -0.5f, //
-        0.f,   0.5f,  //
+        0.0f,  0.5f,  //
     };
 
-    m_ColorData = {
+    std::vector<GLfloat> colorData = {
         1.0f, 0.0f, 0.0f, //
         0.0f, 1.0f, 0.0f, //
-        0.0f, 0.0f, 1.0f  //
+        0.0f, 0.0f, 1.0f, //
     };
 
-    m_IndexData = {0, 1, 2};
+    std::vector<GLint> indexData = {0, 1, 2};
 
-    glGenBuffers(1, &m_VertexBufferID);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferID);
-    glBufferData(GL_ARRAY_BUFFER, 2 * m_VertexData.size() * sizeof(GLfloat),
-                 m_VertexData.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &m_VertexBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferId);
+    glBufferData(GL_ARRAY_BUFFER, 2 * vertexData.size() * sizeof(GLfloat),
+                 vertexData.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &m_ColorBufferID);
-    glBindBuffer(GL_ARRAY_BUFFER, m_ColorBufferID);
-    glBufferData(GL_ARRAY_BUFFER, 3 * m_ColorData.size() * sizeof(GLfloat),
-                 m_ColorData.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &m_ColorBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, m_ColorBufferId);
+    glBufferData(GL_ARRAY_BUFFER, 3 * colorData.size() * sizeof(GLfloat),
+                 colorData.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &m_IndexBufferID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_IndexData.size() * sizeof(GLuint),
-                 m_IndexData.data(), GL_STATIC_DRAW);
-}
-
-void Triangle::Update() {
-    glUseProgram(m_ProgramID);
-
-    GLint status;
-    glValidateProgram(m_ProgramID);
-    glGetProgramiv(m_ProgramID, GL_VALIDATE_STATUS, &status);
-    if (status != GL_TRUE) {
-        int infoLogLength;
-        glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &infoLogLength);
-
-        std::vector<char> errMessage(infoLogLength + 1);
-        glGetProgramInfoLog(m_ProgramID, infoLogLength, 0, &errMessage[0]);
-    }
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferID);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, m_ColorBufferID);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-
-    glUseProgram(0);
+    glGenBuffers(1, &m_IndexBufferId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferId);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexData.size() * sizeof(GLuint),
+                 indexData.data(), GL_STATIC_DRAW);
 }
